@@ -125,7 +125,7 @@ def get_config(args):
         print '%s -> %s' % (k, v)
     
 
-def main():
+def repomanager_main():
     """
     """
     logging.basicConfig(level=logging.DEBUG)
@@ -146,7 +146,7 @@ def main():
     cmnds[args[0]](args)
 
 if __name__ == '__main__':
-    main()
+    repomanager_main()
 
     
 
