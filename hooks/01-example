@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "repo path: $REPO_PATH"
+
+[ -z "$REPO_PATH" ] && exit 1
+
+echo $REPO_PATH
+exit 0

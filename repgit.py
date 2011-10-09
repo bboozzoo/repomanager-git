@@ -1,40 +1,11 @@
 import logging
-import subprocess
-import shlex
 import os
+from utils import run_cmd
 
 class GitException(Exception):
     """exception wrapper
     """
     pass
-
-def run_cmd(cmd, chdir=None):
-    """
-    run a command and return a tuple retcode, stdout, stderr
-    Arguments:
-    - `cmd`: command string
-    """
-    l = logging.getLogger('git')
-    cmd_l = shlex.split(cmd)
-    l.debug('exec command %s' % (cmd))
-    l.debug('as list %s' % (cmd_l))
-
-    # set directory to current if not defined
-    if not chdir:
-        chdir = os.getcwd()
-    p = subprocess.Popen(cmd_l, cwd=chdir, stdout=subprocess.PIPE, 
-                         stderr=subprocess.PIPE)
-    
-    try:
-        out, err = p.communicate()
-        l.debug('stdout: ' + str(out))
-        l.debug('stderr: ' + str(err))
-    except Exception, e:
-        l.error('failed to run process: %s' % (str(e)))
-        pass
-
-    l.debug('process finished, retcode %d' % (p.returncode))
-    return p.returncode, out, err
 
 def is_git_repo(path):
     """

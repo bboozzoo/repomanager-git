@@ -4,9 +4,11 @@ import logging
 import repgit
 import sys
 import os.path
+from utils import run_cmd, run_parts
 
 # root directory for all repositories
 REPO_ROOT = 'repositories'
+HOOKS_DIR = 'hooks'
 
 class InvalidParameters(Exception):
     """
@@ -53,9 +55,9 @@ def create_repo(args):
     name, path = __extract_repo_name_path(args)
 
     repo = repgit.create_bare_repo(path)
-    # fix configuration
-#    repo.set_config()
-
+    # run hooks
+    l.info('running user hooks for repot at %s' % (path))
+    run_parts(HOOKS_DIR, env={'REPO_PATH' : os.path.abspath(path)})
 
 def gc_repo(args):
     """run gc in repository
