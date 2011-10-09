@@ -1,0 +1,2 @@
+rm dist/repomanager*.tar.gz
+python setup.py sdist --formats=gztar
