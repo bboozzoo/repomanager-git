@@ -1,6 +1,6 @@
 import logging
 import os
-from utils import run_cmd
+from screpper.utils import run_cmd
 
 class GitException(Exception):
     """exception wrapper
@@ -18,7 +18,7 @@ def is_git_repo(path):
         return True
     return False
 
-class Repo(object):
+class GitRepo(object):
     """repository wrapper
     """
     
@@ -58,7 +58,7 @@ class Repo(object):
         - `path`:
         """
         
-        r = Repo(path, bare=True)
+        r = GitRepo(path, bare=True)
         r.bind()
         return r
 
@@ -69,7 +69,7 @@ class Repo(object):
         Arguments:
         - `path`:
         """
-        r = Repo(path)
+        r = GitRepo(path)
         r.bind()
         return r
 
@@ -115,18 +115,18 @@ class Repo(object):
 
 
 def open_repo(path):
-    """create a Repo object bound to given path
+    """create a GitRepo object bound to given path
     
     Arguments:
     - `path`:
     """
     l = logging.getLogger('git')
     l.info('open a repository at %s' % (path))
-    r = Repo.init_existing(path)
+    r = GitRepo.init_existing(path)
     return r
 
 def create_bare_repo(path):
-    """create a Repo object for a bare repository. Initialization of a
+    """create a GitRepo object for a bare repository. Initialization of a
     bare repository is performed, hence it should not exist
     beforehand.
     
@@ -135,7 +135,7 @@ def create_bare_repo(path):
     """
     l = logging.getLogger('git')
     l.info('create a repository at %s' % (path))
-    r = Repo.init_bare(path)
+    r = GitRepo.init_bare(path)
     return r
     
 
