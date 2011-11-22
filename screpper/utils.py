@@ -14,7 +14,7 @@ def run_cmd(cmd, chdir=None, env=None):
     - `chdir`: directory to chdir into before runing a command
     - `env`: environment variables to append
     """
-    l = logging.getLogger('util')
+    l = logging.getLogger('screpper.util')
     cmd_l = shlex.split(cmd)
     l.debug('exec command %s' % (cmd))
     l.debug('as list %s' % (cmd_l))
@@ -42,6 +42,7 @@ def run_cmd(cmd, chdir=None, env=None):
     l.debug('process finished, retcode %d' % (p.returncode))
     return p.returncode, out, err
 
+
 def run_parts(sdir, env=None):
     """run scripts from given directory
     
@@ -49,7 +50,7 @@ def run_parts(sdir, env=None):
     - `sdir`: scripts directory
     - `env`: additional env variables to set
     """
-    l = logging.getLogger('util')
+    l = logging.getLogger('screpper.util')
 
     flist = filter(lambda x: os.path.isfile(os.path.join(sdir, x)), os.listdir(sdir))
     flist = filter(lambda x: not x.endswith('~'), flist)
@@ -63,3 +64,13 @@ def run_parts(sdir, env=None):
             l.error('script %s failed, exit status %d' % (f, ret))
     
 
+def singleton(cls):
+    """
+    signleton decorator function
+    """
+    instances = {}
+    def getinstance():
+        if cls not in instances:
+            instances[cls] = cls()
+        return instances[cls]
+    return getinstance
